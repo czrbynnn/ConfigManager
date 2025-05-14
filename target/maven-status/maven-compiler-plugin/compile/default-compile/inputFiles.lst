@@ -1,4 +1,11 @@
 C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\commands\ConfigManagerTabCompletor.java
 C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\commands\MainCommand.java
 C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\ConfigManager.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\CheckAllArgs.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\CreateOperations.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\FileOperations.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\MainOperationsFile.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\ModificationOperations.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\RemovalOperations.java
+C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\manager\ViewingOperations.java
 C:\Coding Utils\Minecraft Plugins\ConfigManager\src\main\java\com\czrbyn\configManager\utils\ColorUtils.java

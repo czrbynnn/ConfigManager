@@ -4,15 +4,17 @@ import com.czrbyn.configManager.utils.ColorUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 
 public class FileOperations {
 
-    public void createFile(File fileToCreate, CommandSender sender) {
+    public void createFile(String fileToCreate, CommandSender sender, Plugin plugin) {
         try {
-            if (fileToCreate.createNewFile()) {
+            File toCreate = new File(plugin.getDataFolder(), fileToCreate);
+            if (toCreate.createNewFile()) {
                 sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8]&a File successfully created."));
             }
         } catch (IOException e) {
@@ -21,17 +23,7 @@ public class FileOperations {
         }
     }
 
-    public void deleteFile(File fileToDelete, CommandSender sender) {
-        try {
-            if (fileToDelete.delete()) {
-                sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8] &aFile successfully created."));
-            }
 
-        } catch (Exception e) {
-            sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8] &cFile deletion unsuccessful, check console for extra information."));
-            e.printStackTrace();
-        }
-    }
 
     public void reloadFile(File fileToReload, CommandSender sender) {
         try {

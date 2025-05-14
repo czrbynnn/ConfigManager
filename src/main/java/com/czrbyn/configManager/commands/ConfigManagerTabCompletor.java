@@ -16,7 +16,7 @@ public class ConfigManagerTabCompletor implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("addList", "addString", "createList", "createString", "removeKey", "setValue");
+            return Arrays.asList("createString","createInt","createBoolean","createDouble","createFloat","createLong","createList","setValue","addToList","removeFromList","clearList","getValue","getType","removeKey","createFile","reloadFile","saveFile");
         }
 
         if (args.length == 2) {
@@ -30,9 +30,7 @@ public class ConfigManagerTabCompletor implements TabCompleter {
             return pluginNames;
         }
 
-        if (args.length == 3) {
-            return Arrays.asList("config.yml", "settings.yml");
-        }
+
 
         return Collections.emptyList();
     }

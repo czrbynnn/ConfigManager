@@ -3,6 +3,7 @@ package com.czrbyn.configManager.manager;
 import com.czrbyn.configManager.ConfigManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.util.List;
@@ -18,11 +19,11 @@ public class MainOperationsFile {
     public MainOperationsFile() {
         List<Object> list = ConfigManager.getInstance().getAllOperations();
 
-        co = (CreateOperations) list.get(1);
-        fo = (FileOperations) list.get(2);
-        mo = (ModificationOperations) list.get(3);
-        ro = (RemovalOperations) list.get(4);
-        vo = (ViewingOperations) list.get(5);
+        co = (CreateOperations) list.get(0);
+        fo = (FileOperations) list.get(1);
+        mo = (ModificationOperations) list.get(2);
+        ro = (RemovalOperations) list.get(3);
+        vo = (ViewingOperations) list.get(4);
 
     }
 
@@ -52,14 +53,14 @@ public class MainOperationsFile {
         }
     }
 
+    public void fileOperator2(CommandSender sender, String[] args, Plugin plugin) {
+        if (args[0].equals("createFile")) {
+            fo.createFile(args[2], sender, plugin);
+        }
+    }
+
     public void fileOperator(File f, CommandSender sender, String[] args) {
         switch (args[0]) {
-            case "createFile":
-                fo.createFile(f, sender);
-                break;
-            case "deleteFile":
-                fo.deleteFile(f, sender);
-                break;
             case "reloadFile":
                 fo.reloadFile(f, sender);
                 break;

@@ -1,5 +1,6 @@
 package com.czrbyn.configManager.manager;
 
+import com.czrbyn.configManager.ConfigManager;
 import com.czrbyn.configManager.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -8,29 +9,42 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CheckAllArgs {
 
-    private FileConfiguration f;
-    private File file;
+    private final MainOperationsFile mof;
 
-    private MainOperationsFile mof;
+    public CheckAllArgs() {
+        ConfigManager cfm = ConfigManager.getInstance();
+        mof = cfm.getMof();
+    }
 
     public boolean Check(String[] args, CommandSender sender) {
-        if (args.length < 4) {
+        if (args.length < 3) {
             sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8] &cNot enough arguments provided! Usage: /configmanager <addList etc> <pluginName (target)> <filename> <key> <thingToAdd>"));
 
             return false;
         } else {
+
+            FileConfiguration f;
+            File file;
+
+
             f = getConfigurationFile(args[1], args[2]);
             file = getConfigFile(args[1], args[2]);
 
+
+
+
             if (file == null || f == null) {
-                sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8] &cEither the configuration filename you provided is wrong, or the plugin is wrong. Please retry."));
-                return false;
+                if (args[0].equals("createFile")) {
+                    mof.fileOperator2(sender, args, getPlugin(args[1]));
+                    return true;
+                } else {
+                    sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8] &cEither the configuration filename you provided is wrong, or the plugin is wrong. Please retry."));
+                    return false;
+                }
             } else {
                 var arg1 = args[0];
                 var key = args[3];
@@ -50,12 +64,29 @@ public class CheckAllArgs {
                             if (args.length > 5) {
                                 String result = java.util.Arrays.stream(args, 4, args.length)
                                         .collect(Collectors.joining(" "));
-
-                                mof.createOperator(f, key, result, file, args);
+                                mof.modifyOperator(f, key, result, file, args);
                             } else {
-                                mof.createOperator(f, key, args[4], file, args);
+                                mof.modifyOperator(f, key, args[4], file, args);
                             }
+                            return true;
+                        case "getValue","getType":
+                            if (args.length > 5) {
+                                String result = java.util.Arrays.stream(args, 4, args.length)
+                                        .collect(Collectors.joining(" "));
+                                mof.viewOperator(f, key, result, file, args);
+                            } else {
+                                mof.viewOperator(f, key, args[4], file, args);
+                            }
+                            return true;
+                        case "removeKey":
+                            mof.removeOperator(f, key, file, args);
+                            return true;
+                        case "saveFile","reloadFile":
+                            mof.fileOperator(file, sender, args);
+                            return true;
                     }
+                } else {
+                    return false;
                 }
             }
         }
@@ -70,18 +101,9 @@ public class CheckAllArgs {
                     canModify(cfg, key, sender);
             case "getValue", "getType" -> canGet(cfg, key, sender);
             case "removeKey" -> canRemove(cfg, key, sender);
-            case "createFile", "reloadFile", "deleteFile", "saveFile" -> canDelete(sender, file);
+            case "createFile", "reloadFile", "saveFile" -> true;
             default -> false;
         };
-    }
-
-    public boolean canDelete(CommandSender sender, File file) {
-        if (file.exists()) {
-            return true;
-        } else {
-            sender.sendMessage(ColorUtils.colorize("&8[&bConfigManager&8] &cThe file you provided does not exist."));
-            return false;
-        }
     }
 
     public boolean canRemove(FileConfiguration cfg, String key, CommandSender sender) {
@@ -118,6 +140,9 @@ public class CheckAllArgs {
         } else {
             return true;
         }
+    }
+    public Plugin getPlugin(String pluginName) {
+        return Bukkit.getPluginManager().getPlugin(pluginName);
     }
 
     public FileConfiguration getConfigurationFile(String pluginName, String fileName) {

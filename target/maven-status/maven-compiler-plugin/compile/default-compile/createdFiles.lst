@@ -1,4 +1,11 @@
-com\czrbyn\configManager\commands\MainCommand.class
 com\czrbyn\configManager\utils\ColorUtils.class
-com\czrbyn\configManager\commands\ConfigManagerTabCompletor.class
+com\czrbyn\configManager\manager\FileOperations.class
+com\czrbyn\configManager\manager\CheckAllArgs.class
 com\czrbyn\configManager\ConfigManager.class
+com\czrbyn\configManager\commands\MainCommand.class
+com\czrbyn\configManager\manager\MainOperationsFile.class
+com\czrbyn\configManager\manager\ModificationOperations.class
+com\czrbyn\configManager\manager\ViewingOperations.class
+com\czrbyn\configManager\manager\CreateOperations.class
+com\czrbyn\configManager\manager\RemovalOperations.class
+com\czrbyn\configManager\commands\ConfigManagerTabCompletor.class

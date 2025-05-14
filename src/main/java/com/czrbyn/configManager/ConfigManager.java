@@ -30,6 +30,8 @@ public final class ConfigManager extends JavaPlugin {
     public void onEnable() {
         cfm = this;
 
+        saveDefaultConfig(); //this is for testing, there are no configurable values in this plugin.
+
 
         cmtc = new ConfigManagerTabCompletor();
 
