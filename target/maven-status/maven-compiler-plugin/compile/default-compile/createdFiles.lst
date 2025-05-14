@@ -1,0 +1,4 @@
+com\czrbyn\configManager\commands\MainCommand.class
+com\czrbyn\configManager\utils\ColorUtils.class
+com\czrbyn\configManager\commands\ConfigManagerTabCompletor.class
+com\czrbyn\configManager\ConfigManager.class
