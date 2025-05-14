@@ -34,7 +34,7 @@ public class ModificationOperations {
         }
     }
 
-    public void removeList(FileConfiguration cfg, String key, Object value, File f) {
+    public void removeFromList(FileConfiguration cfg, String key, Object value, File f) {
         Object raw = cfg.get(key);
         List<Object> list;
 

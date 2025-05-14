@@ -9,11 +9,15 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CheckAllArgs {
 
     private FileConfiguration f;
     private File file;
+
+    private MainOperationsFile mof;
 
     public boolean Check(String[] args, CommandSender sender) {
         if (args.length < 4) {
@@ -30,16 +34,39 @@ public class CheckAllArgs {
             } else {
                 var arg1 = args[0];
                 var key = args[3];
-                return checkArg1(arg1, f, key, sender, file);
+                if (checkArg1(arg1, f, key, sender, file)) {
+                    switch (arg1) {
+                        case "createString","createInt","createBoolean","createDouble","createFloat","createLong","createList":
+                            if (args.length > 5) {
+                                String result = java.util.Arrays.stream(args, 4, args.length)
+                                        .collect(Collectors.joining(" "));
+
+                                mof.createOperator(f, key, result, file, args);
+                            } else {
+                                mof.createOperator(f, key, args[4], file, args);
+                            }
+                            return true;
+                        case "setValue","addToList","removeFromList","clearList" :
+                            if (args.length > 5) {
+                                String result = java.util.Arrays.stream(args, 4, args.length)
+                                        .collect(Collectors.joining(" "));
+
+                                mof.createOperator(f, key, result, file, args);
+                            } else {
+                                mof.createOperator(f, key, args[4], file, args);
+                            }
+                    }
+                }
             }
         }
+        return true;
     }
 
     public boolean checkArg1(String arg, FileConfiguration cfg, String key, CommandSender sender, File file) {
         return switch (arg) {
             case "createString", "createInt", "createBoolean", "createDouble", "createFloat", "createLong",
                  "createList" -> canCreate(cfg, key, sender);
-            case "setValue", "addList", "removeList", "clearList" ->
+            case "setValue", "addToList", "removeFromList", "clearList" ->
                     canModify(cfg, key, sender);
             case "getValue", "getType" -> canGet(cfg, key, sender);
             case "removeKey" -> canRemove(cfg, key, sender);
