@@ -1,0 +1,4 @@
+name: ConfigManager
+version: '1'
+main: com.czrbyn.configManager.ConfigManager
+api-version: '1.21'
